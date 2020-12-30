@@ -3,3 +3,17 @@ on: pull_request_review
 jobs:
   labelWhenApproved:
     runs-on: ubuntu-latest
+
+    env:
+      APPROVALS: 1
+      GITHUB_TOKEN:  
+    steps: 
+      - name: Set Label When Approved
+        uses: TobKed/label-when-approved-action@v1.3
+        with:
+          # The GITHUB_TOKEN secret of the repository
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # A label to be checked/added/removed
+          label: Approved
+          comment: 'PR approved by at least one committer and no changes requested.'
+          pullRequestNumber: ${{ steps.source-run-info.outputs.pullRequestNumber }}
